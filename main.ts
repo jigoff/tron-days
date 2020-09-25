@@ -1,12 +1,13 @@
 namespace SpriteKind {
     export const enemy_monkey = SpriteKind.create()
     export const enemy_bear = SpriteKind.create()
+    export const princess = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy_monkey, function (sprite, otherSprite) {
     monkey.destroy()
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    projectile = sprites.createProjectileFromSprite(img`
+    spear = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -27,8 +28,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_bear, function (sprite, otherSprite) {
     bear.destroy()
+    spear.destroy()
 })
-let projectile: Sprite = null
+let spear: Sprite = null
 let monkey: Sprite = null
 let bear: Sprite = null
 let knight: Sprite = null
@@ -50,6 +52,7 @@ knight = sprites.create(img`
     . . . . . 2 2 . 5 5 . f . . . . 
     . . . . 2 2 2 . e e e f . . . . 
     `, SpriteKind.Player)
+controller.moveSprite(knight)
 bear = sprites.create(img`
     ................................
     ................................
@@ -119,4 +122,4 @@ let princess = sprites.create(img`
     . . . 3 3 3 3 3 3 3 3 3 . . . . 
     . . . 3 3 3 3 3 3 3 3 3 . . . . 
     . . . 3 3 3 3 3 3 3 3 3 . . . . 
-    `, SpriteKind.Enemy)
+    `, SpriteKind.princess)
