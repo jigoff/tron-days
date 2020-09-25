@@ -5,6 +5,9 @@ namespace SpriteKind {
     export const objec = SpriteKind.create()
     export const object = SpriteKind.create()
     export const enemy_tiger = SpriteKind.create()
+    export const object_key1 = SpriteKind.create()
+    export const object_key2 = SpriteKind.create()
+    export const object_key3 = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy_bear, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
@@ -13,6 +16,10 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (knight.vy == 0) {
         knight.vy = -150
     }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.object_key1, function (sprite, otherSprite) {
+    key.destroy()
+    keyCount += 1
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy_monkey, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
@@ -46,14 +53,28 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_tiger, function (sprit
     tiger.destroy()
     spear.destroy()
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.object_key2, function (sprite, otherSprite) {
+    key2.destroy()
+    keyCount += 1
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy_tiger, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
+})
+info.onLifeZero(function () {
+    game.over(false)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_monkey, function (sprite, otherSprite) {
     monkey.destroy()
     spear.destroy()
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.object_key3, function (sprite, otherSprite) {
+    key3.destroy()
+    keyCount += 1
+})
 let spear: Sprite = null
+let key3: Sprite = null
+let key2: Sprite = null
+let key: Sprite = null
 let tiger: Sprite = null
 let monkey: Sprite = null
 let bear: Sprite = null
@@ -78,6 +99,7 @@ knight = sprites.create(img`
     `, SpriteKind.Player)
 knight.setPosition(14, 34)
 knight.ay = 280
+info.setLife(1)
 tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001010100000000000000000000000000000000000000000000000101010101010000000000000000000000000000000000000000000000000000000000000000000000000000000101010000000000000000000000000000000000000000000000000101010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -202,7 +224,7 @@ tiger = sprites.create(img`
     ................................
     ................................
     `, SpriteKind.enemy_tiger)
-let key = sprites.create(img`
+key = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -219,8 +241,8 @@ let key = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
-    `, SpriteKind.object)
-let key2 = sprites.create(img`
+    `, SpriteKind.object_key1)
+key2 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -237,8 +259,8 @@ let key2 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
-    `, SpriteKind.object)
-let key3 = sprites.create(img`
+    `, SpriteKind.object_key2)
+key3 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -255,7 +277,7 @@ let key3 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
-    `, SpriteKind.object)
+    `, SpriteKind.object_key3)
 key.setPosition(32, 70)
 tiger.setPosition(52, 70)
 monkey.setPosition(66, 70)
@@ -264,13 +286,6 @@ princess.setPosition(138, 41)
 key2.setPosition(49, 46)
 key3.setPosition(66, 36)
 let keyCount = 0
-game.onUpdate(function () {
-    if (keyCount == 3) {
-        if (knight.overlapsWith(princess)) {
-            game.over(true)
-        }
-    }
-})
 game.onUpdate(function () {
     knight.setImage(img`
         . . . . . . . . . . . . . . . . 
@@ -295,19 +310,9 @@ game.onUpdate(function () {
     }
 })
 forever(function () {
-    if (knight.overlapsWith(key)) {
-        key.destroy()
-        key.setPosition(0, 0)
-        keyCount += 1
-    }
-    if (knight.overlapsWith(key2)) {
-        key2.destroy()
-        key2.setPosition(0, 0)
-        keyCount += 1
-    }
-    if (knight.overlapsWith(key3)) {
-        key3.destroy()
-        key3.setPosition(0, 0)
-        keyCount += 1
+    if (keyCount == 3) {
+        if (knight.overlapsWith(princess)) {
+            game.over(true)
+        }
     }
 })
