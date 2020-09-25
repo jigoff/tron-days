@@ -6,9 +6,6 @@ namespace SpriteKind {
     export const object = SpriteKind.create()
     export const enemy_tiger = SpriteKind.create()
 }
-sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy_monkey, function (sprite, otherSprite) {
-    monkey.destroy()
-})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     spear = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
@@ -33,7 +30,16 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_bear, function (sprite
     bear.destroy()
     spear.destroy()
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_tiger, function (sprite, otherSprite) {
+    tiger.destroy()
+    spear.destroy()
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_monkey, function (sprite, otherSprite) {
+    monkey.destroy()
+    spear.destroy()
+})
 let spear: Sprite = null
+let tiger: Sprite = null
 let monkey: Sprite = null
 let bear: Sprite = null
 let knight: Sprite = null
@@ -108,7 +114,7 @@ monkey = sprites.create(img`
     . . . . . . e e e e . . . . . . 
     . . . . . e e e . e . . . . . . 
     `, SpriteKind.enemy_monkey)
-let tiger = sprites.create(img`
+tiger = sprites.create(img`
     ................................
     ................................
     ................................
