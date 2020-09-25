@@ -6,6 +6,9 @@ namespace SpriteKind {
     export const object = SpriteKind.create()
     export const enemy_tiger = SpriteKind.create()
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    knight.vy = -200
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     spear = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
@@ -31,7 +34,6 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_bear, function (sprite
     spear.destroy()
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_tiger, function (sprite, otherSprite) {
-    let tiger: Sprite = null
     tiger.destroy()
     spear.destroy()
 })
@@ -42,6 +44,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_monkey, function (spri
 let spear: Sprite = null
 let monkey: Sprite = null
 let bear: Sprite = null
+let tiger: Sprite = null
 let knight: Sprite = null
 knight = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -61,6 +64,78 @@ knight = sprites.create(img`
     . . . . . 2 2 . 5 5 . f . . . . 
     . . . . 2 2 2 . e e e f . . . . 
     `, SpriteKind.Player)
+tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010101010101000000000000000000000000000000000000000000000000000000000000000000000000010101010100000000000000000101010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . 2 2 2 2 2 2 . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    2 2 2 2 2 . . . . . . . . 2 2 2 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, [myTiles.transparency16,sprites.builtin.brick], TileScale.Sixteen))
+knight.ay = 280
+controller.moveSprite(knight, 100, 0)
+tiger = sprites.create(img`
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ...........f....................
+    ..........f1....................
+    ........dd44....................
+    ......4dff44f44.................
+    .....444f44f444f4...............
+    .....444444f444ff4..............
+    .....133f4444444f44f4...........
+    .....144fddd444ff44f44f4ff......
+    .......4ffdd4fff444f44f44f4ff...
+    ...........dff4444ff44f44f4df...
+    ..........4ff444fff444f4df.d4...
+    ........444fddddfdddddfdd...ff..
+    ......ff44444ddffdddddf.....d4..
+    ......f444..44df...d4ff.....df4.
+    ............44d....444........d4
+    ...........4444....444.........4
+    .........ff4444..ff444..........
+    .........f4444...f444...........
+    ................................
+    ................................
+    ................................
+    ................................
+    `, SpriteKind.enemy_tiger)
+let key = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . f f f f . . . . . . . . . . . 
+    . f . . 5 5 5 . . . . . . . . . 
+    . . f . 5 f 5 5 5 5 5 . . . . . 
+    . . . f f 5 5 . 5 . 5 . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.object)
 bear = sprites.create(img`
     ................................
     ................................
