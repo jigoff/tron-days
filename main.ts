@@ -6,6 +6,9 @@ namespace SpriteKind {
     export const object = SpriteKind.create()
     export const enemy_tiger = SpriteKind.create()
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    knight.vy = -200
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     spear = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
@@ -29,6 +32,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_bear, function (sprite, otherSprite) {
     bear.destroy()
     spear.destroy()
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.object, function (sprite, otherSprite) {
+	
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_tiger, function (sprite, otherSprite) {
     tiger.destroy()
@@ -61,7 +67,27 @@ knight = sprites.create(img`
     . . . . . 2 2 . 5 5 . f . . . . 
     . . . . 2 2 2 . e e e f . . . . 
     `, SpriteKind.Player)
-controller.moveSprite(knight)
+knight.ay = 280
+tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001010100000000000000000000000000000000000000000000000101010101010000000000000000000000000000000000000000000000000000000000000000000000000000000101010000000000000000000000000000000000000000000000000101010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . 2 2 2 . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    2 2 2 2 2 2 . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . 2 2 2 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . 2 2 2 2 2 . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, [myTiles.transparency16,sprites.dungeon.floorLight2], TileScale.Sixteen))
+scene.cameraFollowSprite(knight)
+controller.moveSprite(knight, 100, 0)
 bear = sprites.create(img`
     ................................
     ................................
