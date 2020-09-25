@@ -2,6 +2,9 @@ namespace SpriteKind {
     export const enemy_monkey = SpriteKind.create()
     export const enemy_bear = SpriteKind.create()
     export const princess = SpriteKind.create()
+    export const objec = SpriteKind.create()
+    export const object = SpriteKind.create()
+    export const enemy_tiger = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy_monkey, function (sprite, otherSprite) {
     monkey.destroy()
@@ -91,11 +94,11 @@ monkey = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
-    . . . . . . e e e e . . . . . . 
-    . . . . . e f e e e . . . . . . 
-    . . . . e e e e e e . . . . . . 
-    . . . . e e e e e e e . . . . . 
-    . 5 . . . e e e e . e . . . . . 
+    . . . . . . d d e e . . . . . . 
+    . . . . . d f d e e . . . . . . 
+    . . . . d d d d e e . . . . . . 
+    . . . . d d d d e e e . . . . . 
+    . 5 . . . d d e e . e . . . . . 
     . . 5 . . . e e e . e . . . . . 
     . . 5 . . e e e e e e . . e . . 
     . . e e e e e e e e . . e e . . 
@@ -105,6 +108,40 @@ monkey = sprites.create(img`
     . . . . . . e e e e . . . . . . 
     . . . . . e e e . e . . . . . . 
     `, SpriteKind.enemy_monkey)
+let tiger = sprites.create(img`
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ...........f....................
+    ..........f1....................
+    ........dd44....................
+    ......4dff44f44.................
+    .....444f44f444f4...............
+    .....444444f444ff4..............
+    .....133f4444444f44f4...........
+    .....144fddd444ff44f44f4ff......
+    .......4ffdd4fff444f44f44f4ff...
+    ...........dff4444ff44f44f4df...
+    ..........4ff444fff444f4df.d4...
+    ........444fddddfdddddfdd...ff..
+    ......ff44444ddffdddddf.....d4..
+    ......f444..44df...d4ff.....df4.
+    ............44d....444........d4
+    ...........4444....444.........4
+    .........ff4444..ff444..........
+    .........f4444...f444...........
+    ................................
+    ................................
+    ................................
+    ................................
+    `, SpriteKind.enemy_tiger)
 let princess = sprites.create(img`
     . . . . . . 2 e e e . . . . . . 
     . . . . . . 5 5 5 e e . . . . . 
@@ -123,3 +160,21 @@ let princess = sprites.create(img`
     . . . 3 3 3 3 3 3 3 3 3 . . . . 
     . . . 3 3 3 3 3 3 3 3 3 . . . . 
     `, SpriteKind.princess)
+let key = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . f f f f . . . . . . . . . . . 
+    . f . . 5 5 5 . . . . . . . . . 
+    . . f . 5 f 5 5 5 5 5 . . . . . 
+    . . . f f 5 5 . 5 . 5 . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.object)
