@@ -7,7 +7,9 @@ namespace SpriteKind {
     export const enemy_tiger = SpriteKind.create()
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    knight.vy = -200
+    if (knight.vy == 0) {
+        knight.vy = -150
+    }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     spear = sprites.createProjectileFromSprite(img`
@@ -28,6 +30,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, knight, 100, 10)
+    pause(1000)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_bear, function (sprite, otherSprite) {
     bear.destroy()
