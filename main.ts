@@ -6,10 +6,16 @@ namespace SpriteKind {
     export const object = SpriteKind.create()
     export const enemy_tiger = SpriteKind.create()
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy_bear, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (knight.vy == 0) {
         knight.vy = -150
     }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy_monkey, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     spear = sprites.createProjectileFromSprite(img`
@@ -36,12 +42,12 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_bear, function (sprite
     bear.destroy()
     spear.destroy()
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.object, function (sprite, otherSprite) {
-	
-})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_tiger, function (sprite, otherSprite) {
     tiger.destroy()
     spear.destroy()
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy_tiger, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.enemy_monkey, function (sprite, otherSprite) {
     monkey.destroy()
@@ -70,6 +76,7 @@ knight = sprites.create(img`
     . . . . . 2 2 . 5 5 . f . . . . 
     . . . . 2 2 2 . e e e f . . . . 
     `, SpriteKind.Player)
+knight.setPosition(14, 34)
 knight.ay = 280
 tiles.setTilemap(tiles.createTilemap(hex`1000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001010100000000000000000000000000000000000000000000000101010101010000000000000000000000000000000000000000000000000000000000000000000000000000000101010000000000000000000000000000000000000000000000000101010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`, img`
     . . . . . . . . . . . . . . . . 
@@ -213,3 +220,94 @@ let key = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.object)
+let key2 = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . f f f f . . . . . . . . . . . 
+    . f . 2 2 2 . . . . . . . . . . 
+    f . . 2 f 2 2 2 2 2 . . . . . . 
+    . f f f 2 2 . 2 . 2 . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.object)
+let key3 = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . f f f f . . . . . . . . 
+    . . . . f . . f . . . . . . . . 
+    . . . . f f 7 7 . . . . . . . . 
+    . . . . . 7 f 7 7 7 7 7 . . . . 
+    . . . . . 7 7 7 . 7 . 7 . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.object)
+key.setPosition(32, 70)
+tiger.setPosition(52, 70)
+monkey.setPosition(66, 70)
+bear.setPosition(114, 30)
+princess.setPosition(138, 41)
+key2.setPosition(49, 46)
+key3.setPosition(66, 36)
+let keyCount = 0
+game.onUpdate(function () {
+    if (keyCount == 3) {
+        if (knight.overlapsWith(princess)) {
+            game.over(true)
+        }
+    }
+})
+game.onUpdate(function () {
+    knight.setImage(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . 2 2 2 2 2 2 . . . . 
+        . . . . . 2 2 2 2 2 2 . . . . . 
+        . . . . . . 5 5 5 5 . . . . . . 
+        . . . . . 5 5 5 5 5 5 . . . . . 
+        . . . . . 5 5 5 5 5 5 . . . . . 
+        . . . . . 5 5 5 5 f 5 1 . . . . 
+        . . . . . 5 5 5 d d 5 1 . . . . 
+        . . . . . . 5 5 d d 1 1 1 . . . 
+        . . . . . . . 5 d 5 . f . . . . 
+        . . . . . . 2 2 5 5 5 f . . . . 
+        . . . . . 2 2 2 d d d d . . . . 
+        . . . . . 2 2 5 5 5 5 f . . . . 
+        . . . . . 2 2 5 5 5 . f . . . . 
+        . . . . . 2 2 . 5 5 . f . . . . 
+        . . . . 2 2 2 . e e e f . . . . 
+        `)
+    if (knight.vx < 0) {
+        knight.image.flipX()
+    }
+})
+forever(function () {
+    if (knight.overlapsWith(key)) {
+        key.destroy()
+        key.setPosition(0, 0)
+        keyCount += 1
+    }
+    if (knight.overlapsWith(key2)) {
+        key2.destroy()
+        key2.setPosition(0, 0)
+        keyCount += 1
+    }
+    if (knight.overlapsWith(key3)) {
+        key3.destroy()
+        key3.setPosition(0, 0)
+        keyCount += 1
+    }
+})
