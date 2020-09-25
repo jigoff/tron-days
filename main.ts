@@ -623,13 +623,13 @@ forever(function () {
 forever(function () {
     if (bear.vx < 0) {
         bear.image.flipX()
-        pause(2000)
+        pause(1000)
     }
 })
 forever(function () {
     if (monkey.vx < 0) {
         monkey.image.flipX()
-        pause(2000)
+        pause(1000)
     }
 })
 forever(function () {
@@ -643,7 +643,7 @@ forever(function () {
 forever(function () {
     if (tiger.vx < 0) {
         tiger.image.flipX()
-        pause(2000)
+        pause(1000)
     }
 })
 forever(function () {
